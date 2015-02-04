@@ -82,6 +82,7 @@ typedef BYTE* LPBYTE;
 typedef const char* LPCSTR;
 
 #define ZeroMemory(Destination,Length) memset((Destination),0,(Length))
+//binary encoding assumed!
 int EncodeData(int nLevel, int nVersion , LPCSTR lpsSource, int sourcelen,unsigned char QR_m_data[]);
 
 /*nLevel - уровень коррекции ошибок

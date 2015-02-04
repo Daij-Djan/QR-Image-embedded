@@ -740,10 +740,11 @@ int GetBitLength(BYTE nMode, int ncData, int nVerGroup)
 
 
 
+int EncodeSourceData(LPCSTR lpsSource, int ncLength, int nVerGroup,int m_nBlockLength[MAX_DATACODEWORD],BYTE m_byBlockMode[MAX_DATACODEWORD],BYTE m_byDataCodeWord[MAX_DATACODEWORD]);
 int EncodeSourceData(LPCSTR lpsSource, int ncLength, int nVerGroup,int m_nBlockLength[MAX_DATACODEWORD],BYTE m_byBlockMode[MAX_DATACODEWORD],BYTE m_byDataCodeWord[MAX_DATACODEWORD])
 {
 
-	ZeroMemory(m_nBlockLength, sizeof(m_nBlockLength));
+	ZeroMemory(m_nBlockLength, sizeof(int) * MAX_DATACODEWORD);
 
 	int i, j;
 
@@ -1689,11 +1690,12 @@ int CountPenalty(BYTE m_byModuleData[177][177])
 }
 
 
+void FormatModule(BYTE m_byModuleData[177][177],BYTE m_byAllCodeWord[MAX_ALLCODEWORD]);
 void FormatModule(BYTE m_byModuleData[177][177],BYTE m_byAllCodeWord[MAX_ALLCODEWORD])
 {
 	int i, j;
 
-	ZeroMemory(m_byModuleData, sizeof(m_byModuleData));
+	ZeroMemory(m_byModuleData, sizeof(BYTE)*177*177);
 
 
 	//Function module placement
@@ -1779,7 +1781,7 @@ int EncodeData(int nLevel, int nVersion , LPCSTR lpsSource, int sourcelen, unsig
 
 	ZeroMemory(QR_m_data,MAX_BITDATA);
 	// If the data length is not specified, acquired by lstrlen
-	int ncLength = sourcelen > 0 ? sourcelen : strlen(lpsSource);
+	int ncLength = sourcelen > 0 ? sourcelen : (int)strlen(lpsSource);
 
 	if (ncLength == 0)
 		return -1; // No data
@@ -1965,6 +1967,3 @@ int EncodeData(int nLevel, int nVersion , LPCSTR lpsSource, int sourcelen, unsig
 	return m_nSymbolSize;
 
 }
-
-
-
